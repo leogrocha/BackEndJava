@@ -1,0 +1,61 @@
+Objetivo:
+
+    Criar uma API RestFull para controle de produtos.
+
+Modelo
+    Produto: id, nome, quantidade, valor, observacao
+
+Repositorio de produto
+    obterTodos, obterPorId, adicionar, atualizar, deletar.
+
+Serviço de produto
+    obterTodos, obterPorId, adicionar, atualizar, deletar.
+
+Controller de Produto
+    obterTodos, obterPorId, adicionar, atualizar, deletar.    
+
+
+                                        Anotações sobre o projeto
+
+jpaRepository => No arquivo ProdutoRepository foi utilizado o método de jpaRepository
+onde a responsabiliade dos arquivos do repository foram transferidos para ele, anteriormente
+quando não tinha o vínculo com o banco de dados para poder testar a aplicação foi utilizado
+uma lista com uma lógica que pudesse funcionar todos os métodos desejados para aquela classe
+com isso como essa responsabiliade de gerenciar as informações foi transferido para o jpaRepository
+foi necessário ir até o produtoService é colocar os métodos prontos para que pudesse funcionar 
+o código corretamente.
+
+Exemplo: obterTodos() => findAll() - agora o findAll()
+obterPorId() => findById();
+adicionar() => save();
+deletar() => deleteById();
+atualizar() => saveAndFlush();
+
+Agora como foi feito as substuições é possível ter os dados corretamente no banco de dados
+e também no momento de testar no insomnia.
+
+DTO => Nesse projeto a classe produto que é uma classe de banco está sendo utilizada
+em muitas áreas dentro do projeto e se por um acaso eu tivesse algum atributo privado
+não conseguiria bloquear a sua utilização. Visto isso com o DTO será criado um novo 
+arquivo chamado ProdutoDTO que terá a função de mostrar apenas as informações necessárias
+dentro da classe produto, com isso será feito um desacoplamento para manter uma segurança
+e mais profissional.
+
+Entre o Service o Repository será utilizado a classe principal chamada de Produto.Já a 
+classe de controller ou outra camada que eu possa utilizar no meu projeto será utilizado
+o ProdutoDTO.
+
+ProdutoRequest => Eu estou informando o tipo de dado que eu espero receber quando é 
+realizado uma requisição para o back-end. Quando eu vou adicionar alguma informação ou 
+até mesmo consultar algum produto que já está cadastrado pode ser que alguma informação
+para mim não faça sentido de ser informada como por exemplo o id do produto. Nesse 
+caso com a classe ProdutoRequest eu consigo retirar o atributo do id.
+
+ProdutoResponse => Eu estou informando o tipo de informação que eu irei devolver
+para o front-end.
+
+ModelMapper => Transformação de uma lista de produtos(classe criada) para a lista de ProdutoDTO
+
+Save => O método save é utilizado tanto para poder adicionar um novo elemento quanto para 
+poder atualizar um novo elemento. Para ele saber se é para atualizar um registro ou adicionar ele
+verifica se foi passado algum id. Caso seja ele sabe que é para atualizar.
